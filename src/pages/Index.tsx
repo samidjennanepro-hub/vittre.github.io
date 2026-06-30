@@ -190,7 +190,6 @@ function WindowShowcase() {
             className="h-80 w-full md:hidden"
             style={{
               backgroundImage: `url(${import.meta.env.BASE_URL}images/showcase/lvtv-showcase-mobile.jpg)`,
-              backgroundAttachment: "fixed",
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               backgroundPosition: "center",
