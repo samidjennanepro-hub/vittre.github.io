@@ -20,6 +20,27 @@ const values = [
   { title: "Produits éco", desc: "Produits biodégradables respectueux de l'environnement et de votre intérieur." },
 ];
 
+const realizationItems = [
+  {
+    type: "image",
+    src: `${import.meta.env.BASE_URL}images/realisations/particulier-baie-vitree.jpeg`,
+    title: "Baie vitrée chez un particulier",
+    desc: "Un rendu net et lumineux après intervention.",
+  },
+  {
+    type: "image",
+    src: `${import.meta.env.BASE_URL}images/realisations/avant-apres-vitrine.jpeg`,
+    title: "Avant / après vitrine",
+    desc: "Nettoyage de vitrine avec résultat visible.",
+  },
+  {
+    type: "video",
+    src: `${import.meta.env.BASE_URL}videos/realisation-nettoyage-vitres.mp4`,
+    title: "Intervention en vidéo",
+    desc: "Un exemple concret de nettoyage de vitres.",
+  },
+] as const;
+
 function SnapchatIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
     <img
@@ -127,6 +148,47 @@ export default function AboutPage() {
                 <h3 className="font-bold text-gray-900 mb-2">{v.title}</h3>
                 <p className="text-sm text-gray-500 leading-relaxed">{v.desc}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Réalisations */}
+      <section className="px-6 py-20 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <span className="inline-block text-xs font-semibold tracking-widest text-teal-500 uppercase mb-3">Réalisations</span>
+            <h2 className="text-3xl font-extrabold text-gray-900 mb-3">Quelques réalisations</h2>
+            <p className="text-gray-500 max-w-2xl mx-auto">
+              Quelques exemples réels de nettoyages de vitres réalisés pour des particuliers et professionnels.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-5">
+            {realizationItems.map((item) => (
+              <article key={item.src} className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
+                <div className="aspect-[4/5] bg-gray-100">
+                  {item.type === "video" ? (
+                    <video
+                      src={item.src}
+                      className="h-full w-full object-cover"
+                      controls
+                      playsInline
+                      preload="metadata"
+                    />
+                  ) : (
+                    <img
+                      src={item.src}
+                      alt={item.title}
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  )}
+                </div>
+                <div className="p-5">
+                  <h3 className="font-bold text-gray-900 mb-2">{item.title}</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
+                </div>
+              </article>
             ))}
           </div>
         </div>
