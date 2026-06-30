@@ -176,12 +176,26 @@ function WindowShowcase() {
             <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
             <div className="w-3 h-3 rounded-full bg-green-400"></div>
           </div>
-          <div className="w-full h-80" style={{
-            backgroundImage: `url(${import.meta.env.BASE_URL}images/showcase/original-window-showcase.png)`,
-            backgroundAttachment: "fixed",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }} />
+          <div
+            className="hidden h-80 w-full md:block"
+            style={{
+              backgroundImage: `url(${import.meta.env.BASE_URL}images/showcase/lvtv-showcase-desktop.png)`,
+              backgroundAttachment: "fixed",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+          <div
+            className="h-80 w-full md:hidden"
+            style={{
+              backgroundImage: `url(${import.meta.env.BASE_URL}images/showcase/lvtv-showcase-mobile.jpg)`,
+              backgroundAttachment: "fixed",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
         </div>
       </div>
     </section>
@@ -388,81 +402,43 @@ function DevisSection() {
   const [postalCode, setPostalCode] = useState("");
   const [department, setDepartment] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [emailStatus, setEmailStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [emailStatus, setEmailStatus] = useState<"idle" | "submitting">("idle");
+  const formsparkEndpoint =
+    "https://submit-form.com/64a2c6b4-6028-4af3-9269-a0f959613084";
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const message = [
+    "Bonjour LVTV Clean Service,",
+    "",
+    "Je souhaite demander un devis pour un nettoyage de vitres.",
+    "",
+    "Informations client :",
+    `- Nom : ${lastName}`,
+    `- Prénom : ${firstName}`,
+    `- Téléphone : ${phoneNumber}`,
+    `- Adresse : ${address}`,
+    `- Ville : ${city}`,
+    `- Code postal : ${postalCode}`,
+    `- Département : ${department}`,
+    "",
+    "Détails de la demande :",
+    `- Type de bien : ${selected}`,
+    `- Nombre de fenêtres : ${windows}`,
+    `- Fréquence souhaitée : ${frequency}`,
+    "",
+    "Merci de me recontacter pour un devis.",
+  ].join("\n");
 
-    const message = [
-      "Bonjour LVTV Clean Service,",
-      "",
-      "Je souhaite demander un devis pour un nettoyage de vitres.",
-      "",
-      "Informations client :",
-      `- Nom : ${lastName}`,
-      `- Prénom : ${firstName}`,
-      `- Téléphone : ${phoneNumber}`,
-      `- Adresse : ${address}`,
-      `- Ville : ${city}`,
-      `- Code postal : ${postalCode}`,
-      `- Département : ${department}`,
-      "",
-      "Détails de la demande :",
-      `- Type de bien : ${selected}`,
-      `- Nombre de fenêtres : ${windows}`,
-      `- Fréquence souhaitée : ${frequency}`,
-      "",
-      "Merci de me recontacter pour un devis.",
-    ].join("\n");
-
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     const submitter = (event.nativeEvent as SubmitEvent).submitter;
     const deliveryMethod =
       submitter instanceof HTMLButtonElement ? submitter.value : "whatsapp";
 
     if (deliveryMethod === "email") {
       setEmailStatus("submitting");
-
-      try {
-        const response = await fetch(
-          "https://submit-form.com/64a2c6b4-6028-4af3-9269-a0f959613084",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify({
-              nom: lastName,
-              prenom: firstName,
-              telephone: phoneNumber,
-              adresse: address,
-              ville: city,
-              codePostal: postalCode,
-              departement: department,
-              typeDeBien: selected,
-              nombreDeFenetres: windows,
-              frequenceSouhaitee: frequency,
-              message,
-              _email: {
-                from: `${firstName} ${lastName}`,
-                subject: `Nouvelle demande de devis - ${firstName} ${lastName}`,
-              },
-            }),
-          },
-        );
-
-        if (!response.ok) {
-          throw new Error(`Erreur Formspark : ${response.status}`);
-        }
-
-        setEmailStatus("success");
-      } catch {
-        setEmailStatus("error");
-      }
-
       return;
     }
 
+    event.preventDefault();
     setEmailStatus("idle");
     window.open(
       `https://wa.me/33609702019?text=${encodeURIComponent(message)}`,
@@ -479,47 +455,55 @@ function DevisSection() {
             <h2 className="text-3xl font-extrabold text-gray-900 mb-2">Estimez votre nettoyage</h2>
             <p className="text-gray-500 text-sm">Remplissez le formulaire puis envoyez votre demande par WhatsApp ou par email.</p>
           </div>
-          <form onSubmit={handleSubmit}>
+          <form action={formsparkEndpoint} method="POST" onSubmit={handleSubmit}>
+            <input type="hidden" name="_redirect" value="https://lvtvcleanservice.fr/#devis" />
+            <input
+              type="hidden"
+              name="_email.subject"
+              value={`Nouvelle demande de devis - ${firstName} ${lastName}`}
+            />
+            <input type="hidden" name="Type de bien" value={selected} />
+            <input type="hidden" name="Message complet" value={message} />
             <div className="grid sm:grid-cols-2 gap-5 mb-7">
               <div>
                 <label className="text-sm font-medium text-gray-700 block mb-2" htmlFor="first-name">Prénom</label>
-                <input id="first-name" value={firstName} onChange={(e) => setFirstName(e.target.value)} required
+                <input id="first-name" name="Prénom" value={firstName} onChange={(e) => setFirstName(e.target.value)} required
                   className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-teal-300"
                   placeholder="Votre prénom" />
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 block mb-2" htmlFor="last-name">Nom</label>
-                <input id="last-name" value={lastName} onChange={(e) => setLastName(e.target.value)} required
+                <input id="last-name" name="Nom" value={lastName} onChange={(e) => setLastName(e.target.value)} required
                   className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-teal-300"
                   placeholder="Votre nom" />
               </div>
               <div className="sm:col-span-2">
                 <label className="text-sm font-medium text-gray-700 block mb-2" htmlFor="address">Adresse</label>
-                <input id="address" value={address} onChange={(e) => setAddress(e.target.value)} required
+                <input id="address" name="Adresse" value={address} onChange={(e) => setAddress(e.target.value)} required
                   className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-teal-300"
                   placeholder="Rue, numéro, complément" />
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 block mb-2" htmlFor="city">Ville</label>
-                <input id="city" value={city} onChange={(e) => setCity(e.target.value)} required
+                <input id="city" name="Ville" value={city} onChange={(e) => setCity(e.target.value)} required
                   className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-teal-300"
                   placeholder="Votre ville" />
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 block mb-2" htmlFor="postal-code">Code postal</label>
-                <input id="postal-code" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} required inputMode="numeric"
+                <input id="postal-code" name="Code postal" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} required inputMode="numeric"
                   className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-teal-300"
                   placeholder="75000" />
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 block mb-2" htmlFor="department">Département</label>
-                <input id="department" value={department} onChange={(e) => setDepartment(e.target.value)} required
+                <input id="department" name="Département" value={department} onChange={(e) => setDepartment(e.target.value)} required
                   className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-teal-300"
                   placeholder="Ex : Moselle, Nord, Gironde" />
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 block mb-2" htmlFor="phone-number">Numéro de téléphone</label>
-                <input id="phone-number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required type="tel"
+                <input id="phone-number" name="Téléphone" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required type="tel"
                   className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-teal-300"
                   placeholder="06 00 00 00 00" />
               </div>
@@ -546,7 +530,7 @@ function DevisSection() {
             <div className="grid sm:grid-cols-2 gap-5 mb-8">
               <div>
                 <label className="text-sm font-medium text-gray-700 block mb-2">Nombre de fenêtres (approx.)</label>
-                <select value={windows} onChange={(e) => setWindows(e.target.value)}
+                <select name="Nombre de fenêtres" value={windows} onChange={(e) => setWindows(e.target.value)}
                   className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-teal-300 cursor-pointer appearance-auto">
                   <option>1 à 5 fenêtres</option>
                   <option>6 à 10 fenêtres</option>
@@ -556,7 +540,7 @@ function DevisSection() {
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 block mb-2">Fréquence souhaitée</label>
-                <select value={frequency} onChange={(e) => setFrequency(e.target.value)}
+                <select name="Fréquence souhaitée" value={frequency} onChange={(e) => setFrequency(e.target.value)}
                   className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-teal-300 cursor-pointer appearance-auto">
                   <option>Intervention unique</option>
                   <option>Mensuelle</option>
@@ -590,14 +574,9 @@ function DevisSection() {
                 </button>
               </div>
             </div>
-            {emailStatus === "success" && (
+            {emailStatus === "submitting" && (
               <p className="mt-4 text-center text-sm font-medium text-teal-600">
-                Votre demande a bien été envoyée par email.
-              </p>
-            )}
-            {emailStatus === "error" && (
-              <p className="mt-4 text-center text-sm font-medium text-red-600">
-                L'envoi a échoué. Réessayez ou utilisez le bouton WhatsApp.
+                Envoi vers le formulaire sécurisé...
               </p>
             )}
           </form>
