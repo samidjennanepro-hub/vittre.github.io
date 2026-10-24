@@ -88,8 +88,7 @@ export default function AboutPage() {
           <span className="inline-block text-xs font-semibold tracking-widest text-teal-500 uppercase mb-4">À propos</span>
           <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">LVTV CLEAN SERVICE</h1>
           <p className="text-gray-500 text-lg max-w-xl mx-auto">
-            LVTV Clean Service est une société locale spécialisée dans le lavage de vitres. Notre activité a commencé par des demandes de petits artisans et de commerçants ayant un besoin d'entretien de vitrine régulier, pour ensuite élargir notre clientèle à des particuliers et des sociétés de tailles plus conséquentes.
-          </p>
+            LVTV CLEAN SERVICE est une entreprise locale basée en Moselle, spécialisée dans le lavage de vitres pour les particuliers et les professionnels. Née pour répondre aux besoins d'entretien régulier des vitrines de commerçants et d'artisans locaux, notre structure s'est rapidement développée. Aujourd'hui, nous mettons également notre expertise au service des particuliers, en intervenant avec réactivité sur l'ensemble des départements de la Moselle et de la Meurthe-et-Moselle          </p>
         </div>
       </section>
 
