@@ -86,7 +86,7 @@ export default function AboutPage() {
           style={{ background: "radial-gradient(ellipse, #5eead4 0%, #2dd4bf 30%, transparent 70%)" }} />
         <div className="max-w-4xl mx-auto text-center relative">
           <span className="inline-block text-xs font-semibold tracking-widest text-teal-500 uppercase mb-4">À propos</span>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">LVTV Clean Service</h1>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">LVTV CLEAN SERVICE</h1>
           <p className="text-gray-500 text-lg max-w-xl mx-auto">
             LVTV Clean Service est une société locale spécialisée dans le lavage de vitres. Notre activité a commencé par des demandes de petits artisans et de commerçants ayant un besoin d'entretien de vitrine régulier, pour ensuite élargir notre clientèle à des particuliers et des sociétés de tailles plus conséquentes.
           </p>
