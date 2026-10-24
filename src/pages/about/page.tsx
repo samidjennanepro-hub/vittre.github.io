@@ -23,7 +23,7 @@ const values = [
 const realizationItems = [
   {
     type: "image",
-    src: `${import.meta.env.BASE_URL}images/realisations/particulier-baie-vitree.jpeg`,
+    src: `${import.meta.env.BASE_URL}images/realisations/vitres_pergola.jpeg`,
     title: "Baie vitrée chez un particulier",
     desc: "Un rendu net et lumineux après intervention.",
   },
