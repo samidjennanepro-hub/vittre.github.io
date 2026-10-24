@@ -107,12 +107,11 @@ export default function AboutPage() {
           <div>
             <h2 className="text-3xl font-extrabold text-gray-900 mb-4">Notre parcours</h2>
             <p className="text-gray-600 leading-relaxed mb-4">
-              LVTV Clean Service intervient en France pour le lavage de vitres des particuliers, commerçants, artisans et sociétés. Notre expérience terrain nous permet d'assurer un entretien régulier, soigné et adapté à chaque besoin.
-            </p>
+              Après plusieurs expériences professionnelles au Luxembourg, j'ai choisi de créer mon entreprise pour mettre mon savoir-faire au service d'une clientèle française. Travailler au sein de structures luxembourgeoises m'a inculqué le sens de l'exigence et de l'excellence. Aujourd'hui, j'ai à cœur de proposer des prestations de haute qualité afin de garantir la satisfaction totale de mes clients.            </p>
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-3 text-sm text-gray-600">
                 <MapPin className="w-4 h-4 text-teal-500 shrink-0" />
-                En France
+                En Moselle et Meurthe et Moselle (57/54)
               </div>
               <div className="flex items-center gap-3 text-sm text-gray-600">
                 <Clock className="w-4 h-4 text-teal-500 shrink-0" />
