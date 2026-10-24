@@ -105,7 +105,7 @@ export default function AboutPage() {
             </div>
           </div>
           <div>
-            <h2 className="text-3xl font-extrabold text-gray-900 mb-4">Notre parcours</h2>
+            <h2 className="text-3xl font-extrabold text-gray-900 mb-4">NOTRE PARCOURS</h2>
             <p className="text-gray-600 leading-relaxed mb-4">
               Après plusieurs expériences professionnelles au Luxembourg, j'ai choisi de créer mon entreprise pour mettre mon savoir-faire au service d'une clientèle française. Travailler au sein de structures luxembourgeoises m'a inculqué le sens de l'exigence et de l'excellence. Aujourd'hui, j'ai à cœur de proposer des prestations de haute qualité afin de garantir la satisfaction totale de mes clients.            </p>
             <div className="flex flex-col gap-3">
